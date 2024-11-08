@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Furnace UPT DATA</title>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+
+}
+th{
+	background-color:#009933;
+	color:white;
+}
+td{
+	background-color:#c2d6d6;
+	color:black;
+}
+</style>
+
+</head>
+<body>
+
+<table style="width:100%;">
+	<tr>
+		<th>DATE</th>
+		<th>SHIFT</th>
+		<th>Energy Data</th>
+		<th>Furnace Charge Weight In TON</th>
+		<th>EMPLOYE NAME</th>
+		
+	</tr>
+	<tr>
+		<td>{{date}}</td>
+		<td>{{shift}}</td>
+		<td>{{energy}}</td>
+		<td>{{lmt}}</td>
+		<td>{{emp}}</td>
+	</tr>
+<h1>DATE: {{date}}</h1>
+<h1>SHIFT: {{shift}}</h1>
+<h1>FURNACE CHARGE WEIGHT IN TON: {{lmt}}</h1>
+<h1>EMPLOYE NAME: {{emp}}</h1>
+</table>
+
+</body>
+</html>

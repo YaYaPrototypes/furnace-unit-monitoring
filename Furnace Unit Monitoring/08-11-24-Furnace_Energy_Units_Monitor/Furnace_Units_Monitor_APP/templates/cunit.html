@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Shift Value</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+        @font-face {
+            font-family: 'SevenSegment';
+            font-weight: 100px;
+            
+            src: url('/static/Seven%20Segment.ttf') format('truetype'); /* Use %20 for space in URL */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif; /* Fallback font */
+        }
+
+        .LIVE {
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            font-style: normal;
+            font-size: 300px;
+            width: 100%;
+            height: 400px;
+            background-color: rgb(224, 241, 236);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .kwh-data {
+            color: #cf0e14;
+            font-family: 'SevenSegment'; /* Apply the Seven Segment font */
+            font-size: 100px; /* Adjust font size as needed */
+        }
+        .Energy{
+            background-color: #361516;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- <h1>Current Shift Value</h1> -->
+    <!-- {% if current_shift_value is not none %}
+        <p>The maximum value for the current shift is: {{ current_shift_name }}</p>
+    {% else %}
+        <p>No value found for the current shift.</p>
+    {% endif %} -->
+
+    <!-- <h2>Real-Time Data</h2> -->
+    <div id="real-time-data">
+        <p>Energy Meter: </p>
+        <div class="Energy">
+        <p ><span id="kwh-data" class="kwh-data">Loading...</span> <span style="font-size: 50px;color: #cf0e14;">GWh</span> </p>
+    </div>
+        <p>Previous Shift LOG Value: <span id="current-shift-value">Loading...</span></p>
+        <p>LIVE UNITS:</p>
+        <div class="LIVE">
+            <p><span id="difference">Loading...</span></p>
+            <p>KW</p>
+        </div>
+
+        <p>SHIFT NAME: <span id="current_shift_name">Loading...</span></p>
+        <p>Unit: <span id="unit">GWh</span></p>
+    </div>
+
+    <script>
+        function fetchData() {
+            $.ajax({
+                url: '/update_data_cunit',
+                method: 'GET',
+                success: function(response) {
+                    if (response.kwh_data !== null && response.current_shift_value !== null) {
+                        $('#kwh-data').text(response.kwh_data);
+                        $('#current-shift-value').text(response.current_shift_value);
+                        $('#difference').text(response.difference);
+                        $('#current_shift_name').text(response.current_shift_name);
+                    } else {
+                        $('#kwh-data').text('Error fetching data');
+                        $('#current-shift-value').text('Error fetching data');
+                        $('#difference').text('');
+                    }
+                },
+                error: function() {
+                    $('#kwh-data').text('Error fetching data');
+                    $('#current-shift-value').text('Error fetching data');
+                    $('#difference').text('');
+                }
+            });
+        }
+
+        // Fetch data every second
+        setInterval(fetchData, 1000);
+    </script>
+</body>
+</html>

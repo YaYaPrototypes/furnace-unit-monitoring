@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Furnace UPT DATA</title>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+
+}
+th{
+	background-color:#009933;
+	color:white;
+}
+td{
+	background-color:#c2d6d6;
+	color:black;
+}
+</style>
+</head>
+<body>
+
+<ol>
+<!-- For loop logic of jinja template -->
+{%for i in range(0, max_row)%}
+  
+    <li>{{sheet[i]}}</li>
+{%endfor%}
+  
+</ol>
+
+
+</body>
+</html>

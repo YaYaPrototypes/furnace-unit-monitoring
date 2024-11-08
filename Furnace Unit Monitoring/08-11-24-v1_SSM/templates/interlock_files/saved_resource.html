@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!-- saved from url=(0065)https://www.w3schools.com/html/tryit.asp?filename=tryhtml_default -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Page Title</title>
+</head>
+<body contenteditable="false">
+
+<input type="text" id="first" placeholder="Type any value" oninput="checkInput()">
+<input type="text" id="second" placeholder="Read-only if length of first input &gt; 0">
+
+<script>
+  function checkInput() {
+    const firstInput = document.getElementById("first");
+    const secondInput = document.getElementById("second");
+
+    if (firstInput.value && firstInput.value.length > 0) {
+      secondInput.readOnly = true;
+    } else {
+      secondInput.readOnly = false;
+    }
+    
+  }
+</script>
+
+
+
+
+
+
+</body></html>

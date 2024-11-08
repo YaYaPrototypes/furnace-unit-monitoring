@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+h1{
+	text-align:center;
+	padding:10px;
+	background-color:grey;
+}
+
+body { 
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+  overflow: hidden;
+  background-color: #ffffff;
+  padding: 0;
+}
+
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px; 
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.header a:hover {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+}
+
+.header a.active {
+  background-color: dodgerblue;
+  color: rgb(255, 255, 255);
+}
+
+.header-right {
+  float: right;
+}
+
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .header-right {
+    float: none;
+  }
+}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  float:;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 10px;
+}
+
+.col-75 {
+  float: left;
+  width: 50%;
+  margin-top: 6px;
+}
+
+
+.data{
+  float : left;
+  }
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+.record_button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px 2px;
+  cursor: pointer;
+}
+ input[type=submit] {
+  background-color: #04AA6D;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-decoration: none;
+  margin: 5px 2px;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+}
+
+
+</style>
+</head>
+<body>
+
+
+
+<div class="header">
+<img src="{{url_for('static', filename='tp.svg')}}" alt="Taro Pumps" width="150px">
+
+<div class="header-right">
+<img src="{{url_for('static', filename='ti.svg')}}" alt="Texmo Industries" width="100px">
+
+</div>
+</div>
+<div class="data2">
+<h4 id="cpu"></h4>
+</div>
+
+
+<div class="container">
+    <h1 style="color:white;"> FURNACE EMS</h1>
+    
+    <form action="/field_data_user" method="post" onsubmit="myFunction()">
+    <div class="row">
+	<div class="col-25">
+	    <label for="a">FURNACE ENERGY METER:</label>
+
+	</div>
+    <div class="col-75">
+	<div class="data">
+	    <p style="display:inline;float:left" id="kwh_data"> </p> <p style="display:inline;float:left" id="unit"> </p> 
+    </div>
+</div>
+
+
+</div>
+
+
+
+<div class="row">		
+      <div class="col-25">
+      <label for="a7">DATE:</label>
+      </div>
+          <div class="col-75">
+        <div class="data2">
+            <p id="date"></p>
+          </div>
+      </div>
+
+</div>
+<div class="row">		
+      <div class="col-25">
+      <label for="a5">TIME:</label>
+      </div>
+          <div class="col-75">
+        <div class="data2">
+          <p id="time" ></p> 
+          </div>
+      </div>
+
+</div>
+<div class="row">
+      <div class="col-25">
+      <label for="a5">FURNACE CHARGE WEIGHT IN TON:</label>
+      </div>
+      <div class="col-75">
+      <input type="text" id="a5" name="emp" placeholder="" value="" required>
+      </div>
+      </div>
+
+
+<div class="row">
+      <div class="col-25">
+      <label for="a5">EMPLOYE NAME:</label>
+      </div>
+      <div class="col-75">
+      <input type="text" id="a5" name="emp" placeholder="" value="" required>
+      </div>
+      </div>
+
+      </div>
+<div class="row">
+<div class="col-25">
+
+</div>
+<div class="col-75">
+<input type="submit"  value="Submit" />
+
+</div>
+</div>
+
+
+
+
+</form>
+</div>
+<!-- Furnace Unit Ajax-------------------------------------------------------------------------------- -->
+<script>
+		function energy_data_update() {
+			$.get("/energy_data_update", function (data) {
+			$("#furnace_energy_data").text("Current Time : " + data.furnace_energy_data);   
+			$("#kwh_data").text(data.kwh_data);
+			$("#unit").text(data.unit);
+
+		});
+		}
+		energy_data_update();
+		var intervalId = setInterval(energy_data_update, 1000);
+		
+                function update2() {
+                        $.get("/track2_data", function (data2) {
+                        $("#cpu").text("Current Temp : " + data2.cpu);
+			$("#date").text(data2.date);
+			$("#time").text(data2.time);
+                });
+                }
+                update2();
+                var intervalId = setInterval(update2, 1000);
+</script>
+<!-- Furnace Unit Ajax-------------------------------------------------------------------------------- -->
+<script>
+    function myFunction() {
+      alert("The form was submitted");
+    }
+
+</script>
+
+
+</body>
+
+</html>

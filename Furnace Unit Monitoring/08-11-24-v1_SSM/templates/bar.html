@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Barcode Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.3/JsBarcode.all.min.js"></script>
+    <style>
+      #barcodes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      svg {
+        max-width: 100%;
+        height: auto;
+      }
+      p {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="barcodes"></div>
+    <button type="button" onclick="generateBarcodes()">Generate Barcodes</button>
+    <button type="button" onclick="printBarcodes()">Print Barcodes</button>
+    <script>
+      function generateBarcodes() {
+        var barcodeValues = ['25600-01-13-0001', '25600-09-26-0032', '25600-12-02-0004', '25600-15-03-0004', '25600-15-06-0016', '25600-15-07-0001', '25600-15-07-0015', '25600-15-07-0029', '25600-15-07-0030', '25600-19-07-0202', '25600-19-07-0233', '25600-19-07-0276', '25600-23-05-0001', '25600-01-13-0002', '25600-09-26-0033', '25600-15-07-0031', '25600-15-07-0045', '25600-15-09-0006', '25600-19-03-0002', '25600-19-07-0016', '25600-19-07-0224', '25600-19-07-0231', '25600-19-07-0240', '25600-19-07-0281', '25600-19-07-0282', '25600-19-07-0284', '25600-29-06-0001', '25600-13-03-0002', '25600-15-03-0002', '25600-15-07-0025', '25600-15-07-0033', '25600-15-09-0002', '25600-19-03-0005', '25600-19-07-0047', '25600-19-07-0226', '25600-23-03-0001', '25600-12-04-0001', '25600-15-06-0001', '25600-15-07-0003', '25600-15-07-0037', '25600-15-09-0005', '25600-19-07-0026', '25600-19-07-0223', '25600-19-07-0229', '25600-19-07-0230', '25600-19-07-0272', '25600-19-07-0293', '25600-29-01-0001', '25600-01-22-0003', '25600-09-26-0031', '25600-13-03-0004', '25600-15-03-0001', '25600-15-06-0002', '25600-15-07-0014', '25600-15-07-0023', '25600-15-07-0032', '25600-19-07-0296', '25600-19-07-0318', '25600-27-03-0001', '25600-15-03-0003', '25600-15-07-0019', '25600-15-07-0024', '25600-15-07-0026', '25600-15-07-0034', '25600-15-07-0035', '25600-15-07-0046', '25600-15-08-0003', '25600-19-03-0004', '25600-19-07-0083', '25600-19-07-0228', '25600-19-07-0232', '25600-19-07-0283', '25600-19-07-0295', '25600-23-05-0002', '25600-29-01-0002', '25600-09-26-0034', '25600-15-04-0001', '25600-19-07-0280', '25600-19-07-0317', '25600-09-26-0012', '25600-12-04-0002', '25600-15-07-0039', '25600-19-03-0003', '25600-19-07-0225', '25600-21-01-0001', '25600-98-02-0001']; // Replace this with your array of spare numbers
+        var barcodesDiv = document.getElementById("barcodes");
+        for (var i = 0; i < barcodeValues.length; i++) {
+          for (var j = 0; j < 10; j++) {
+            var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("id", "barcode-" + i + "-" + j);
+            svg.setAttribute("x", j * 10);
+            svg.setAttribute("width", "5mm");
+            svg.setAttribute("height", "50mm");
+            barcodesDiv.appendChild(svg);
+            JsBarcode("#barcode-" + i + "-" + j, barcodeValues[i], {
+              width: 1,
+              height: 50,
+              displayValue: true,
+              textMargin: 0,
+              fontSize: 20,
+              fontOptions: "bold",
+            });
+            //var p = document.createElement("p");
+            //p.innerHTML = barcodeValues[i];
+            //barcodesDiv.appendChild(p);
+          }
+        }
+      }
+      function printBarcodes() {
+        window.print();
+      }
+    </script>
+  </body>
+</html>

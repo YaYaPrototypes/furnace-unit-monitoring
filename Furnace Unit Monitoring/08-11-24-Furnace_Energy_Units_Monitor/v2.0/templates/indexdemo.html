@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple JSON Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Submit Data</h1>
+    <form id="data-form">
+        <label for="inputKey">Key:</label>
+        <input type="text" id="inputKey" name="key" required><br><br>
+
+        <label for="inputValue">Value:</label>
+        <input type="text" id="inputValue" name="value" required><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        $('#data-form').on('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const formData = {
+                key: $('#inputKey').val(),
+                value: $('#inputValue').val()
+            };
+
+            $.ajax({
+                url: '/submit_form',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function(response) {
+                    alert('Success: ' + response.message);
+                    
+                    // Clear input fields after submission
+                    $('#inputKey').val('');
+                    $('#inputValue').val('');
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                    alert('Error submitting data');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

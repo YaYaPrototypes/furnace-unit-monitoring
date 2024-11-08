@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Excel Data</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #6ab04c; /* Soft green for table header */
+    }
+
+    body {
+        background-color: #f0f3f4; /* Light blue-gray for body background */
+    }
+
+    h1 {
+        color: #2c3e50; /* Dark blue for heading */
+    }
+
+    label {
+        color: #3498db; /* Blue for labels */
+    }
+
+    button {
+        background-color: #e74c3c; /* Red button */
+        color: #ffffff; /* White text on button */
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background-color: #c0392b; /* Darker red on hover */
+    }
+#viewBottom {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#scrollToBottom {
+    font-size: 16px;
+    padding: 8px 16px;
+}
+
+</style>
+</head>
+<body>
+    <h1>View Excel Data</h1>
+
+    <div>
+        <label for="fromDate">From Date:</label>
+        <input type="date" id="fromDate">
+        <label for="toDate">To Date:</label>
+        <input type="date" id="toDate">
+        <button id="filterData">Filter Data</button>
+        <button id="showAllData">Show All</button>
+<button id="exportExcel">Export Excel</button>
+
+    </div>
+
+    <div style="overflow-x:auto;">
+        <table id="dataTable" border="1">
+            <!-- Excel data will be displayed here -->
+        </table>
+    </div>
+
+<div id="viewBottom">
+    <button id="scrollToBottom">&#x2193; Go to Bottom</button>
+</div>
+
+    <script>
+        $(document).ready(function() {
+            function updateTable(startDate, endDate) {
+                $.ajax({
+                    url: '/get_filtered_data',
+                    type: 'GET',
+                    data: { startDate: startDate, endDate: endDate },
+		    
+                    success: function(data) {
+                        var tableContent = '<tr><th>Date</th><th>Value 1</th><th>Value 2</th><th>Value 3</th><th>value 4</th><th>value 5</th><th>value 6</th><th>value 7</th><th>value 8</th><th>value 9</th><th>value 10</th><th>value 11</th><th>value 12</th><th>value 13</th><th>value 14</th><th>value 15</th><th>value 16</th><th>value 17</th></tr>';
+                        for (var i = 0; i < data.dates.length; i++) {
+                            tableContent += '<tr>';
+                            tableContent += '<td>' + data.dates[i] + '</td>';
+                            tableContent += '<td>' + data.values1[i] + '</td>';
+                            tableContent += '<td>' + data.values2[i] + '</td>';
+                            tableContent += '<td>' + data.values3[i] + '</td>';
+                            tableContent += '<td>' + data.values4[i] + '</td>';
+                            tableContent += '<td>' + data.values5[i] + '</td>';
+                            tableContent += '<td>' + data.values6[i] + '</td>';
+                            tableContent += '<td>' + data.values7[i] + '</td>';
+                            tableContent += '<td>' + data.values8[i] + '</td>';
+                            tableContent += '<td>' + data.values9[i] + '</td>';
+                            tableContent += '<td>' + data.values10[i] + '</td>';
+                            tableContent += '<td>' + data.values11[i] + '</td>';
+                            tableContent += '<td>' + data.values12[i] + '</td>';
+                            tableContent += '<td>' + data.values13[i] + '</td>';
+                            tableContent += '<td>' + data.values14[i] + '</td>';
+                            tableContent += '<td>' + data.values15[i] + '</td>';
+                            tableContent += '<td>' + data.values16[i] + '</td>';
+                            tableContent += '<td>' + data.values17[i] + '</td>';
+                            tableContent += '</tr>';
+                        }
+                        $('#dataTable').html(tableContent);
+                    }
+                });
+            }
+
+            $('#filterData').click(function() {
+                var fromDate = $('#fromDate').val();
+                var toDate = $('#toDate').val();
+                updateTable(fromDate, toDate);
+            });
+
+            $('#showAllData').click(function() {
+                updateTable(); // Show all data (no date filters)
+            });
+
+            updateTable(); // Load initial data
+        });
+    </script>
+
+<script>
+$(document).ready(function() {
+    $('#exportExcel').click(function() {
+        window.location.href = '/export_excel';
+    });
+});
+</script>
+
+
+<script>
+    $(document).ready(function() {
+        // ... (your existing JavaScript code)
+
+        $('#scrollToBottom').click(function() {
+            // Scroll to the bottom of the table
+            $('#dataTable').scrollTop($('#dataTable')[0].scrollHeight);
+        });
+    });
+</script>
+</body>
+</html>

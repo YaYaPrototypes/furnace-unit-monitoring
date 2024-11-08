@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Plain Vanilla JS Code 128B Barcodes</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+	<style type="text/css">
+<!-- CSS adapted from article: boulderinformationservices.wordpress.com/2011/08/25/print-avery-labels-using-css-and-html/ -->
+		body {
+			margin-top: 0in;
+			margin-left: 0in;
+		}
+		.page {
+			width: 8.5in;
+			height: 10.5in;
+			margin-top: 0.5in;
+			margin-left: 0.25in;
+		}
+    .label {
+			width: 2.1in;
+			height: .9in;
+			padding: .125in .3in 0;
+			margin-right: 0.125in;
+			float: left;
+			text-align: center;
+			overflow: hidden;
+		}
+    .page-break {
+			clear: left;
+			display:block;
+			page-break-after:always;
+		}
+	</style>
+</head>
+<body>
+<div id="result"></div>
+<script type="text/javascript">
+// The MIT License (MIT)
+// Copyright (c) 2017, Notionovus, LLC.
+// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+var arrayCode128Bin = [ '11011001100', '11001101100', '11001100110', '10010011000', '10010001100', '10001001100', '10011001000', '10011000100', '10001100100', '11001001000', '11001000100', '11000100100', '10110011100', '10011011100', '10011001110', '10111001100', '10011101100', '10011100110', '11001110010', '11001011100', '11001001110', '11011100100', '11001110100', '11101101110', '11101001100', '11100101100', '11100100110', '11101100100', '11100110100', '11100110010', '11011011000', '11011000110', '11000110110', '10100011000', '10001011000', '10001000110', '10110001000', '10001101000', '10001100010', '11010001000', '11000101000', '11000100010', '10110111000', '10110001110', '10001101110', '10111011000', '10111000110', '10001110110', '11101110110', '11010001110', '11000101110', '11011101000', '11011100010', '11011101110', '11101011000', '11101000110', '11100010110', '11101101000', '11101100010', '11100011010', '11101111010', '11001000010', '11110001010', '10100110000', '10100001100', '10010110000', '10010000110', '10000101100', '10000100110', '10110010000', '10110000100', '10011010000', '10011000010', '10000110100', '10000110010', '11000010010', '11001010000', '11110111010', '11000010100', '10001111010', '10100111100', '10010111100', '10010011110', '10111100100', '10011110100', '10011110010', '11110100100', '11110010100', '11110010010', '11011011110', '11011110110', '11110110110', '10101111000', '10100011110', '10001011110', '10111101000', '10111100010', '11110101000', '11110100010', '10111011110', '10111101110', '11101011110', '11110101110', '11010000100', '11010010000', '11010011100', '1100011101011', '11010111000'];
+var array5bit_A = [ 'f//AAAAAAAAAAAAAAAAAAAA', 'f//AAAAAAAAAAAAAAAAAAAB', 'f//AAAAAAAAAAAAAAEAAAD/', 'f//AAAAAAAAAAAAAAEAAAAA', 'f//AAAAAAAAAQAAAP8AAAAA', 'f//AAAAAAAAAQAAAP8AAAAB', 'f//AAAAAAAAAQAAAAAAAAD/', 'f//AAAAAAAAAQAAAAAAAAAA', 'f//AAABAAAA/wAAAAAAAAAA', 'f//AAABAAAA/wAAAAAAAAAB', 'f//AAABAAAA/wAAAAEAAAD/', 'f//AAABAAAA/wAAAAEAAAAA', 'f//AAABAAAAAAAAAP8AAAAA', 'f//AAABAAAAAAAAAP8AAAAB', 'f//AAABAAAAAAAAAAAAAAD/', 'f//AAABAAAAAAAAAAAAAAAA', 'QD/AAD/AAAAAAAAAAAAAAAA', 'QD/AAD/AAAAAAAAAAAAAAAB', 'QD/AAD/AAAAAAAAAAEAAAD/', 'QD/AAD/AAAAAAAAAAEAAAAA', 'QD/AAD/AAAAAQAAAP8AAAAA', 'QD/AAD/AAAAAQAAAP8AAAAB', 'QD/AAD/AAAAAQAAAAAAAAD/', 'QD/AAD/AAAAAQAAAAAAAAAA', 'QD/AAAAAAAA/wAAAAAAAAAA', 'QD/AAAAAAAA/wAAAAAAAAAB', 'SL/AADeAAAA/gAAAAIAAAD+', 'QD/AAAAAAAA/wAAAAEAAAAA', 'QD/AAAAAAAAAAAAAP8AAAAA', 'QD/AAAAAAAAAAAAAP8AAAAB', 'QD/AAAAAAAAAAAAAAAAAAD/', 'QD/AAAAAAAAAAAAAAAAAAAA'];
+var array5bit_B = [ 'US0CAuSD38g', 'UUYCA7QBErs', 'ajEDAm49ReY', 'UUoCA+juogg', 'bjEDAjQrOn0', 'bkoDA3iPVH4', 'ajUDAt82atY', 'UU4CA1nljTg', 'cjEDAghkmFU', 'ckoDA0TA9lY', 'izUEAhrxcbg', 'ck4DAxY8F10', 'bjUDAlvFFR8', 'bk4DAxdhexw', 'ajkDAr7LFAw', 'UVICAyQ+UJI', 'TTECAq7UnEM', 'TUoCA+Jw8kA', 'ZjUDAmZGozo', 'TU4CA7CME0s', 'ajUDAvnk9E4', 'ak4DA7VAmk0', 'ZjkDAtle3bI', 'TVICAxOyzrM', 'STUCAqHeHtM', 'SU4CA+16cNA', 'h6QEAZKdo54', 'SVICA62zYxM', 'RTkCAqx1lb4', 'RVICA/z3WM0', 'QT0CAkdoxRU', 'KFYBA46vJCA'];
+var stringStart = '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAACCAQAAADLaIVbAAAANUlEQVQIHQEqANX/A';
+var stringMid = 'AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA';
+var stringEnd = 'AAAAASUVORK5CYII=" style="width:';
+
+function genBarcode(inputString, intWidth, intHeight) {
+var arraySeq = [], i, intChunks, resultString;
+var intRawmod = inputString.length % 5;
+  for (i = 0; i < 5 - intRawmod; i += 1) {
+    inputString += "0";
+  }
+  intChunks = inputString.length / 5;
+  for (i = 0; i < intChunks; i += 1) {
+    arraySeq[i] = parseInt(inputString.substr(i * 5, 5), 2);
+  }
+  resultString = "";
+  for (i = 0; i < arraySeq.length; i += 1) {
+    resultString += stringStart + array5bit_A[arraySeq[i]] + stringMid + array5bit_B[arraySeq[i]] + stringEnd + intWidth + 'px;height:' + intHeight + 'px;">';
+  }
+  return resultString;
+}
+
+function funcCode128B(strText) {
+var j, intWeight, intWtProd = 0;
+var strRaw = "";
+var arrayData = [];
+  arrayData[0] = 104;
+  intWtProd = 104;
+  for (j = 0; j < strText.length; j += 1) {
+    arrayData[j + 1] = strText.charCodeAt(j) - 32;
+    intWeight = j + 1;
+    intWtProd += intWeight * arrayData[j + 1];
+  }
+  arrayData[j + 1] = intWtProd % 103;
+  arrayData[j + 2] = 106;
+  for (j = 0; j < arrayData.length; j += 1) {
+    strRaw += arrayCode128Bin[arrayData[j]];
+  }
+  return(strRaw);
+}
+
+function fnNewPage(pageno) {
+var strNewPage, startNewPage = '<div class="page" id="page';
+  strNewPage = startNewPage + pageno + '">';
+	return strNewPage;
+}
+
+function fnEndPage() {
+var strEndPage = '<div class="page-break"></div></div>';
+	return strEndPage;
+}
+
+function fnNewLabel(barcode, txtHR) {
+var strNewLabel, startNewLabel = '<div class="label">';
+  strNewLabel = startNewLabel + barcode + '<br>' + txtHR + '</div>';
+	return strNewLabel;
+}
+
+function fnShowPage() {
+var outerLoop, innerLoop, indexBarcode, txtHumanReadable, strPage = "";
+	for (outerLoop = 0; outerLoop < 2; outerLoop += 1) {
+		strPage += fnNewPage(outerLoop + 1);
+  	for (innerLoop = 0; innerLoop < 30; innerLoop += 1) {
+			indexBarcode = (30 * outerLoop) + innerLoop + 400;
+			switch (indexBarcode) {
+				case 400:
+    			txtHumanReadable = '' + 123456123; break;
+				case 401:
+    			txtHumanReadable = '' + 456789123; break;
+				case 402:
+    			txtHumanReadable = '' + 111111123; break;
+				default:
+					txtHumanReadable = 'Test1' + indexBarcode;
+			}
+			txtBarcode = genBarcode(funcCode128B(txtHumanReadable), 6.5, 34);
+			strPage += fnNewLabel(txtBarcode, txtHumanReadable)
+	  }
+		strPage += fnEndPage();
+	}
+  document.getElementById("result").innerHTML = strPage;
+}
+	
+fnShowPage();	
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+</script>
+</body>
+</html>

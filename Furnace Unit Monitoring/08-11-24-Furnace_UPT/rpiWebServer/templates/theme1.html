@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+	  <div class="data">
+	    <p id="average"></p>
+	    <p id="total"></p>
+	    <h4 id="t"></h4>
+	  </div>
+<p>----------------second div----------------</p>
+          <div class="data2">
+            <p id="average"></p>
+            <p id="t"></p>
+            <h4 id="cpu"></h4>
+          </div>
+<p>---------------3rd-------</p>
+	<div class="data3">
+		<p id="tt"></p>
+	</div>
+	<script>
+	<!-- first function -->
+
+		function update() {
+			$.get("/update", function (data) {
+			$("#average").text("average " + data.average);
+			$("#total").text("total " + data.total);
+			$("#t").text("Current Time : " + data.t);
+		});
+		}
+		update();
+		var intervalId = setInterval(update, 1000);
+	<!-- second function -->
+                function update2() {
+                        $.get("/track2_data", function (data2) {
+                        $("#cpu").text("Current Temp : " + data2.cpu);
+                        $("#tt").text("Current_Time : " + data2.tt);
+                });
+                }
+                update2();
+                var intervalId = setInterval(update2, 1000);
+	<!-- third function -->
+
+                function update3() {
+                        $.get("/track3_data", function (data3) {
+                        $("#tt").text("Current_Time : " + data3.tt);
+                });
+                }
+                update3();
+                var intervalId = setInterval(update3, 1000);
+        </script>
+</body>
+</html>

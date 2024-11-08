@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Barcode Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.3/JsBarcode.all.min.js"></script>
+    <style>
+      #barcodes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      svg {
+        max-width: 100%;
+        height: auto;
+      }
+      p {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <label for="spare-number">Enter Spare Number:</label>
+      <input type="text" id="spare-number" name="spare-number">
+      <button type="button" onclick="generateBarcodes()">Generate Barcodes</button>
+    </form>
+    <div id="barcodes"></div>
+    <button type="button" onclick="printBarcodes()">Print Barcodes</button>
+    <script>
+      function generateBarcodes() {
+        var barcodeValue = document.getElementById("spare-number").value;
+        var barcodesDiv = document.getElementById("barcodes");
+        for (var i = 0; i < 10; i++) {
+          var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+          svg.setAttribute("id", "barcode-" + i);
+          svg.setAttribute("x", i * 10);
+          svg.setAttribute("width", "5mm");
+          svg.setAttribute("height", "50mm");
+          barcodesDiv.appendChild(svg);
+          JsBarcode("#barcode-" + i, barcodeValue, {
+            width: 1,
+            height: 50,
+            displayValue: false,
+          });
+          var p = document.createElement("p");
+          p.innerHTML = barcodeValue;
+          barcodesDiv.appendChild(p);
+        }
+      }
+      function printBarcodes() {
+
+        window.print();
+      }
+    </script>
+  </body>
+</html>
